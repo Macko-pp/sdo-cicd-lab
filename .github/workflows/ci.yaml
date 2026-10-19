@@ -112,7 +112,7 @@ jobs:
             --timeout=120s \
             job/sdo-expo-job
 
-      -name: Run Kubernetes container
+      - name: Run Kubernetes container
         run: |
           output=$(kubectl logs job/sdo-expo-job)
           echo "Observed: $output"
