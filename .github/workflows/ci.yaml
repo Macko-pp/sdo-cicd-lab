@@ -100,7 +100,7 @@ jobs:
         uses: medyagh/setup-minikube@latest
 
       - name: Load image into Minikube
-        run: minikube image load sdo-expo:1.0
+        run: minikube image load sdo-expo:2.0
 
       - name: Create Kubernetes Job
         run: kubectl apply -f expo/Job.yaml
