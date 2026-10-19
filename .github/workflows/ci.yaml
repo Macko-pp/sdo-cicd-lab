@@ -34,7 +34,7 @@ jobs:
 
       - name: Run container
         run: |
-          out=$(docker run --rm expo:1.0 2 10)
+          out=$(docker run --rm sdo-expo:1.0 2 10)
           echo "$out"
           test "$out" = "2 ^ 10 = 1024"
 
