@@ -103,7 +103,7 @@ jobs:
         run: minikube image load sdo-expo:1.0
 
       - name: Create Kubernetes Job
-        run: kubectl apply -f Job.yaml
+        run: kubectl apply -f expo/Job.yaml
 
       - name: Wait for Job completion
         run: |
