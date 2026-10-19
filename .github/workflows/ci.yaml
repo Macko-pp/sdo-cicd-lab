@@ -96,6 +96,37 @@ jobs:
 
       # TASK 1.3: Add your Kubernetes steps below.
 
+      - name: Start Minikube
+        uses: medyagh/setup-minikube@latest
+
+      - name: Load image into Minikube
+        run: minikube image load sdo-expo:1.0
+
+      - name: Create Kubernetes Job
+        run: kubectl apply -f MANIFEST_FILEJob.yaml
+
+      - name: Wait for Job completion
+        run: |
+          kubectl wait \
+            --for=condition=complete \
+            --timeout=120s \
+            job/sdo-expo-job
+
+      -name: Run Kubernetes container
+        run: |
+          output=$(kubectl logs job/sdo-expo-job)
+          echo "Observed: $output"
+          test "$output" = "2 ^ 10 = 1024"
+
+      - name: Kubernetes diagnostics
+        if: failure()
+        run: |
+          kubectl get jobs,pods || true
+          kubectl describe job sdo-expo-job || true
+          kubectl describe pods -l job-name=sdo-expo-job || true
+          kubectl logs job/sdo-expo-job --all-containers=true || true
+
+
   # ============================================================
   # TASK 2 — WEBSITE INVESTIGATION
   # Independent job, same workflow; both investigations run on push.
